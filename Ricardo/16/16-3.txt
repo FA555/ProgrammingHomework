@@ -1,0 +1,897 @@
+97
+238
+421
+621
+897
+#include <stdio.h>
+#include <stdlib.h>
+
+/**
+ * @brief 
+ * 
+ */
+struct node
+{
+    int num;
+    struct node* next;
+};
+
+typedef struct node node_t;
+typedef struct node *nodeptr_t;
+
+/**
+ * @brief 
+ * 
+ * @param value 
+ * @return nodeptr_t 
+ */
+nodeptr_t newLinkedList(int value)
+{
+    nodeptr_t head = NULL;
+
+    head = malloc(sizeof(node_t));
+
+    head->next = NULL;
+    head->num = value;
+
+    return head;// /*
+}
+
+/**
+ * @brief 
+ *
+ * @param pos 
+ * @param value 
+ * @return nodeptr_t 
+ */
+nodeptr_t append(nodeptr_t pos, int value)
+{
+    nodeptr_t newNode = malloc(sizeof(node_t));
+
+    newNode->num = value;
+    newNode->next = pos->next;
+
+    pos->next = newNode;
+
+    return newNode;
+}
+
+int main(void)
+{
+    int temp;
+    int maxNum;
+    int minNum;
+    int sumNum = 0;
+    nodeptr_t head = NULL;
+    nodeptr_t pos = NULL;
+
+    scanf("%d", &temp);
+    head = newLinkedList(temp);
+    pos = head;
+    maxNum = temp;
+    minNum = temp;
+    sumNum  = sumNum + temp;
+
+    for(;;)
+    {
+        scanf("%d", &temp);
+        if(temp == -1)
+        {
+            break;
+        }
+        pos = append(pos, temp);
+        sumNum = sumNum + temp;
+        if(temp > maxNum)
+        {
+            maxNum = temp;
+        }
+        if(temp < minNum)
+        {
+            minNum = temp;
+        }
+    }
+
+    printf("The maximum,minmum and the total are:%d %d %d\n", maxNum, minNum, sumNum);
+
+    return 0;
+}
+#include <stdio.h>
+#include <stdlib.h>
+
+/**
+ * @brief 
+ * 
+ */
+struct node
+{
+    int num;
+    struct node* next;
+};
+
+typedef struct node node_t;
+typedef struct node *nodeptr_t;
+
+/**
+ * @brief 
+ * 
+ * @param value 
+ * @return nodeptr_t 
+ */
+nodeptr_t newLinkedList(int value)
+{
+    nodeptr_t head = NULL;
+
+    head = malloc(sizeof(node_t));
+
+    head->next = NULL;
+    head->num = value;
+
+    return head;
+}
+
+/**
+ * @brief 
+ * 
+ * @param pos 
+ * @param value 
+ * @return nodeptr_t 
+ */
+nodeptr_t append(nodeptr_t pos, int value)
+{
+    nodeptr_t newNode = malloc(sizeof(node_t));
+
+    newNode->num = value;
+    newNode->next = pos->next;
+
+    pos->next = newNode;
+
+    return newNode;
+}
+
+/**
+ * @brief 
+ * 
+ * @param start 
+ * @param end 
+ */
+void quickSort(nodeptr_t start, nodeptr_t end)
+{
+    if(start == NULL || start == end)
+    {
+        return;
+    }
+
+    int temp;
+    nodeptr_t pos = start->next;
+    nodeptr_t center = start;
+
+    while(pos != end)
+    {
+        if(pos->num <= start->num)
+        {
+            center = center->next;
+            temp = center->num;
+            center->num = pos->num;
+            pos->num = temp;
+        }
+        pos = pos->next;
+    }
+
+    temp = start->num;
+    start->num = center->num;
+    center->num = temp;
+
+    quickSort(start, center);
+    quickSort(center->next, end);
+}
+
+/**
+ * @brief 
+ * 
+ * @param head 
+ */
+void freeLinkedList(nodeptr_t head)
+{
+    nodeptr_t pos = head;
+    while (pos != NULL)
+    {
+        nodeptr_t temp = pos;
+        pos = pos->next;
+        free(temp);
+    }
+}
+
+int main(void)
+{
+    int temp;
+    nodeptr_t head, pos;
+
+    scanf("%d", &temp);
+    head = newLinkedList(temp);
+    pos = head;
+
+    for(;;)
+    {
+        scanf("%d", &temp);
+        if(temp == -1)
+        {
+            break;
+        }
+
+        pos = append(pos, temp);
+    }
+
+    quickSort(head, NULL);
+    pos = head;
+
+    printf("The new list is:");
+
+    while(pos->next != NULL)
+    {
+        printf("%d ", pos->num);
+        pos = pos->next;
+    }
+    printf("%d\n", pos->num);
+
+    freeLinkedList(head);
+    return 0;
+}
+#include <stdio.h>
+#include <stdlib.h>
+
+/**
+ * @brief 
+ * 
+ */
+struct node
+{
+    int num;
+    struct node* next;
+};
+
+typedef struct node node_t;
+typedef struct node *nodeptr_t;
+
+/**
+ * @brief 
+ * 
+ * @param value 
+ * @return nodeptr_t 
+ */
+nodeptr_t newLinkedList(int value)
+{
+    nodeptr_t head = NULL;
+
+    head = malloc(sizeof(node_t));
+
+    head->next = NULL;
+    head->num = value;
+
+    return head;
+}
+
+/**
+ * @brief 
+ * 
+ * @param pos 
+ * @param value 
+ * @return nodeptr_t 
+ */
+nodeptr_t append(nodeptr_t pos, int value)
+{
+    nodeptr_t newNode = malloc(sizeof(node_t));
+
+    newNode->num = value;
+    newNode->next = pos->next;
+
+    pos->next = newNode;
+
+    return newNode;
+}
+
+/**
+ * @brief 
+ * 
+ * @param head 
+ */
+void freeLinkedList(nodeptr_t head)
+{
+    nodeptr_t pos = head;
+    while (pos != NULL)
+    {
+        nodeptr_t temp = pos;
+        pos = pos->next;
+        free(temp);
+    }
+}
+
+/**
+ * @brief 
+ * 
+ * @param listA 
+ * @param listB 
+ * @return int 
+ */
+int match(nodeptr_t listA, nodeptr_t listB)
+{
+    /**
+     * @brief 
+     * 
+     */
+    int flag = 0;
+
+    nodeptr_t posA = listA;
+    nodeptr_t posB = listB;
+    /**
+     * @brief :12223, B:2233;
+     * 
+     */
+    nodeptr_t last_search_pos = NULL;
+
+    for(;;)
+    {
+        if(posA == NULL && posB != NULL)
+        {
+            flag = 0;
+            break;
+        }
+        if(posA == NULL || posB == NULL)
+        {
+            break;
+        }
+        if(posA->num == posB->num)
+        {
+            if(flag == 0)
+            {
+                last_search_pos = posA->next;
+            }
+            flag = 1;
+            posA = posA->next;
+            posB = posB->next;
+        }
+        else
+        {
+            if(flag == 1)
+            {
+                posA = last_search_pos;
+            }
+            else
+            {
+                posA = posA->next;
+            }
+            posB = listB;
+
+            flag = 0;
+        }
+    }
+
+    return flag;
+}
+
+int main(void)
+{
+    int temp, result;
+    nodeptr_t listA, listB, pos;
+
+    scanf("%d", &temp);
+    listA = newLinkedList(temp);
+    pos = listA;
+
+    for(;;)
+    {
+        scanf("%d", &temp);
+
+        if(temp == -1)
+        {
+            break;
+        }
+
+        pos = append(pos, temp);
+    }
+
+    scanf("%d", &temp);
+    listB = newLinkedList(temp);
+    pos = listB;
+
+    for(;;)
+    {
+        scanf("%d", &temp);
+
+        if(temp == -1)
+        {
+            break;
+        }
+        
+        pos = append(pos, temp);
+    }
+
+    result = match(listA, listB);
+    if(result == 0)
+    {
+        printf("ListB is not the sub sequence of ListA.\n");
+    }
+    else
+    {
+        printf("ListB is the sub sequence of ListA.\n");
+    }
+
+    freeLinkedList(listA);
+    freeLinkedList(listB);
+    return 0;
+}
+#include <stdio.h>
+#include <stdlib.h>
+
+/**
+ * @brief 
+ * 
+ */
+struct node
+{
+    int num;
+    struct node* next;
+};
+
+typedef struct node node_t;
+typedef struct node *nodeptr_t;
+
+/**
+ * @brief 
+ * 
+ * @param value 
+ * @return nodeptr_t 
+ */
+nodeptr_t newLinkedList(int value)
+{
+    nodeptr_t head = NULL;
+
+    head = malloc(sizeof(node_t));
+
+    head->next = NULL;
+    head->num = value;
+
+    return head;
+}
+
+/**
+ * @brief 
+ * 
+ * @param pos 
+ * @param value 
+ * @return nodeptr_t 
+ */
+nodeptr_t append(nodeptr_t pos, int value)
+{
+    nodeptr_t newNode = malloc(sizeof(node_t));
+
+    newNode->num = value;
+    newNode->next = pos->next;
+
+    pos->next = newNode;
+
+    return newNode;
+}
+
+/**
+ * @brief 
+ * 
+ * @param head 
+ */
+void freeLinkedList(nodeptr_t head)
+{
+    nodeptr_t pos = head;
+    while (pos != NULL)
+    {
+        nodeptr_t temp = pos;
+        pos = pos->next;
+        free(temp);
+    }
+}
+
+/**
+ * @brief 
+ * 
+ * @param head 
+ * @param pos 
+ * @return nodeptr_t 
+ */
+nodeptr_t find(nodeptr_t head, int pos)
+{
+    nodeptr_t temp = head;
+
+    for(int i = 1; i < pos; i++)
+    {
+        temp = temp->next;
+    }
+
+    return temp;
+}
+
+/**
+ * @brief 
+ * 
+ * @param head 
+ * @param firstStart 
+ * @param firstEnd 
+ * @param secondStart 
+ * @param secondEnd 
+ * @return nodeptr_t 
+ */
+nodeptr_t swap(nodeptr_t head, int firstStart, int firstEnd, int secondStart, int secondEnd)
+{
+    if(firstStart == 1)
+    {
+        if(firstEnd + 1 == secondStart)
+        {
+            nodeptr_t firstStartPos = head;
+            nodeptr_t firstEndPos = find(head, firstEnd);
+            nodeptr_t secondStartPos = firstEndPos->next;
+            nodeptr_t secondEndPos = find(head, secondEnd);
+
+            firstEndPos->next = secondEndPos->next;
+            secondEndPos->next = firstStartPos;
+            head = secondStartPos;
+        }
+        else
+        {
+            nodeptr_t firstStartPos = head;
+            nodeptr_t firstEndPos = find(head, firstEnd);
+            nodeptr_t firstEndPosNext = firstEndPos->next;
+            nodeptr_t secondStartPosPre = find(head, secondStart - 1);
+            nodeptr_t secondStartPos = secondStartPosPre->next;
+            nodeptr_t secondEndPos = find(head, secondEnd);
+
+            firstEndPos->next = secondEndPos->next;
+            secondEndPos->next = firstEndPosNext;
+            secondStartPosPre->next = firstStartPos;
+            head = secondStartPos;
+        }
+    }
+    else
+    {
+        if(firstEnd + 1 == secondStart)
+        {
+            nodeptr_t firstStartPosPre = find(head, firstStart - 1);
+            nodeptr_t firstEndPos = find(head, firstEnd);
+            nodeptr_t secondStartPos = firstEndPos->next;
+            nodeptr_t secondEndPos = find(head, secondEnd);
+
+            firstEndPos->next = secondEndPos->next;
+            secondEndPos->next = firstStartPosPre->next;
+            firstStartPosPre->next = secondStartPos;
+        }
+        else
+        {
+            nodeptr_t firstStartPosPre = find(head, firstStart - 1);
+            nodeptr_t firstEndPos = find(head, firstEnd);
+            nodeptr_t firstEndPosNext = firstEndPos->next;
+            nodeptr_t secondStartPosPre = find(head, secondStart - 1);
+            nodeptr_t secondStartPos = secondStartPosPre->next;
+            nodeptr_t secondEndPos = find(head, secondEnd);
+
+            firstEndPos->next = secondEndPos->next;
+            secondEndPos->next = firstEndPosNext;
+            secondStartPosPre->next = firstStartPosPre->next;
+            firstStartPosPre->next = secondStartPos;
+        }
+    }
+
+    return head;
+}
+
+int main(void)
+{
+    int temp, firstStart, firstEnd, secondStart, secondEnd;
+    nodeptr_t head = NULL;
+    nodeptr_t pos;
+
+    scanf("%d", &temp);
+    head = newLinkedList(temp);
+    pos = head;
+
+    for(;;)
+    {
+        scanf("%d", &temp);
+        if(temp == -1)
+        {
+            break;
+        }
+        pos = append(pos, temp);
+    }
+    getchar();
+    scanf("%d %d %d %d", &firstStart, &firstEnd, &secondStart, &secondEnd);
+
+    head = swap(head, firstStart, firstEnd, secondStart, secondEnd);
+
+    printf("The new list is:");
+    pos = head;
+    for(;;)
+    {
+        if(pos->next == NULL)
+        {
+            printf("%d\n", pos->num);
+            break;
+        }
+        printf("%d ", pos->num);
+        pos = pos->next;
+    }
+
+    freeLinkedList(head);
+    return 0;
+}
+#include <stdio.h>
+#include <stdlib.h>
+
+/**
+ * @brief 
+ * 
+ */
+struct node
+{
+    int num;
+    struct node* next;
+};
+
+typedef struct node node_t;
+typedef struct node *nodeptr_t;
+
+/**
+ * @brief 
+ * 
+ * @param value 
+ * @return nodeptr_t 
+ */
+nodeptr_t newLinkedList(int value)
+{
+    nodeptr_t head = NULL;
+
+    head = malloc(sizeof(node_t));
+
+    head->next = NULL;
+    head->num = value;
+
+    return head;
+}
+
+/**
+ * @brief 
+ * 
+ * @param pos 
+ * @param value 
+ * @return nodeptr_t 
+ */
+nodeptr_t append(nodeptr_t pos, int value)
+{
+    nodeptr_t newNode = malloc(sizeof(node_t));
+
+    newNode->num = value;
+    newNode->next = pos->next;
+
+    pos->next = newNode;
+
+    return newNode;
+}
+
+/**
+ * @brief askdfbnajiswebfa
+ * 
+ * @param head asdkfnawujebnf
+ */
+void freeLinkedList(nodeptr_t head)
+{
+    nodeptr_t pos = head;
+    while (pos != NULL)
+    {
+        nodeptr_t temp = pos;
+        pos = pos->next;
+        free(temp);
+    }
+}
+
+/**
+ * @brief asdfnliawejrbflaujif
+ * 
+ * @param head sdfniawjebfjia
+ * @param pos asdfbawjkebfilqawhe
+ * @return nodeptr_t zxcvasf
+ */
+nodeptr_t findLastNode(nodeptr_t head, nodeptr_t pos)
+{
+    nodeptr_t last = NULL;
+    nodeptr_t temp = head;
+
+    while(temp != pos)
+    {
+        last = temp;
+        temp = temp->next;
+    }
+
+    return last;
+}
+
+/**
+ * @brief qwefqwerqwe
+ * 
+ * @param head asdfasdfas
+ */
+void printLinkedList(nodeptr_t head)
+{
+    nodeptr_t pos = head;
+    for(;;)
+    {
+        if(pos->next == NULL)
+        {
+            printf("%d\n", pos->num);
+            break;
+        }
+        printf("%d ", pos->num);
+        pos = pos->next;
+    }
+}
+
+int main(void)
+{
+    int temp;
+    nodeptr_t listA, listB, pos, posA, posB;
+
+    scanf("%d", &temp);
+    if(temp == -1)
+    {
+        listA = NULL;
+    }
+    else
+    {
+        listA = newLinkedList(temp);
+        pos = listA;
+
+        for(;;)
+        {
+            scanf("%d", &temp);
+
+            if(temp == -1)
+            {
+                break;
+            }
+
+            pos = append(pos, temp);
+        }
+    }
+
+    scanf("%d", &temp);
+    if(temp == -1)
+    {
+        listB = NULL;
+    }
+    else
+    {
+        listB = newLinkedList(temp);
+        pos = listB;
+
+        for(;;)
+        {
+            scanf("%d", &temp);
+
+            if(temp == -1)
+            {
+                break;
+            }
+            
+            pos = append(pos, temp);
+        }
+    }
+
+    posB = listB;
+    while(posB != NULL)
+    {
+        posA = listA;
+        nodeptr_t nextPosB = posB->next;
+        for(;;)
+        {
+            if(posA != NULL)
+            {
+                if(posB->num < posA->num)
+                {
+                    if(posA == listA)
+                    {
+                        if(posB == listB)
+                        {
+                            listB = listB->next;
+                            posB->next = posA;
+                            listA = posB;
+                        }
+                        else
+                        {
+                            nodeptr_t lastPosB = findLastNode(listB, posB);
+
+                            lastPosB->next = posB->next;
+                            listA = posB;
+                            posB->next = posA;
+                        }
+                    }
+                    else
+                    {
+                        if(posB == listB)
+                        {
+                            nodeptr_t lastPosA = findLastNode(listA, posA);
+
+                            listB = listB->next;
+                            posB->next = posA;
+                            lastPosA->next = posB;
+                        }
+                        else
+                        {
+                            nodeptr_t lastPosA = findLastNode(listA, posA);
+                            nodeptr_t lastPosB = findLastNode(listB, posB);
+
+                            lastPosB->next = posB->next;
+                            posB->next = posA;
+                            lastPosA->next = posB;
+                        }
+                    }
+                    break;
+                }
+                else if(posA->num == posB->num)
+                {
+                    break;
+                }
+                else
+                {
+                    posA = posA->next;
+                }
+            }
+            else
+            {
+                nodeptr_t lastPosA = findLastNode(listA, posA);
+                nodeptr_t lastPosB = findLastNode(listB, posB);
+                if(lastPosA != NULL)//asdfasdfasdf
+                {
+                    lastPosA->next = posB;
+                }
+                else
+                {
+                    listA = posB;
+                }
+                if(lastPosB != NULL)//asdfasdfasdf
+                {
+                    lastPosB->next = NULL;
+                }
+                else
+                {
+                    listB = NULL;
+                }
+                nextPosB = NULL;
+                break;
+            }
+        }
+        posB = nextPosB;
+    }
+
+    if(listA == NULL)
+    {
+        printf("There is no item in A list.\n");
+    }
+    else
+    {
+        printf("The new list A:");
+        printLinkedList(listA);
+    }
+    if(listB == NULL)
+    {
+        printf("There is no item in B list.\n");
+    }
+    else
+    {
+        printf("The new list B:");
+        printLinkedList(listB);
+    }
+
+    if(listA != NULL)
+    {
+        freeLinkedList(listA);
+    }
+    if(listB != NULL)
+    {
+        freeLinkedList(listB);
+    }
+    return 0;
+}
